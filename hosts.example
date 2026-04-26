@@ -1,0 +1,8 @@
+# Szablon pliku hostfile dla mpirun.
+# Skopiuj do `hosts` i dostosuj nazwy hostów oraz liczbę slotów.
+#
+# Format: <hostname> slots=<liczba_procesów>
+#
+# Przykład dla dwóch maszyn po 4 sloty:
+host1 slots=4
+host2 slots=4
