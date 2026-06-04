@@ -59,7 +59,7 @@ static void try_enter_section(void) {
     if (!MY_REQ) return;
     if (!clock_w1_satisfied(MY_TS)) return;
     if (!dock_w2_satisfied(&Q, MY_REQ)) return;
-    if (!mech_w3_satisfied(&Q, MY_REQ, M)) return;
+    if (!mech_w3_satisfied(&Q, MY_REQ, M, K)) return;
 
     state = STATE_INSECTION;
     log_state("Wszedłem do doku %d, mam %d mechaników", MY_DOCK, MY_M);

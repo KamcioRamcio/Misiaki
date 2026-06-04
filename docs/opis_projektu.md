@@ -122,10 +122,12 @@ scripts/run.sh           # wrapper uruchomieniowy
 
 Algorytm to **rozszerzenie algorytmu Lamporta** z `rozproszona_sekcja_krytyczna.md`
 o równoczesny przydział doku rozróżnialnego (przez deterministyczną regułę
-`dock_assign`) oraz mechaników nierozróżnialnych (przez warunek heterogenicznej
-sumy `Σ m_j ≤ M` po poprzednikach w kolejce). Pojedyncza, wspólna kolejka
-i atomowy dual-grant eliminują z konstrukcji zakleszczenie pomiędzy dokiem
-a mechanikami. Pełen opis: `docs/opis_algorytmu.md`.
+`dock_assign`) oraz mechaników nierozróżnialnych (przez warunek W3). Warunek W3
+grupuje poprzedników w Q po dokach i sumuje **per-dok max** `m_j` — nie surowę
+sumę wszystkich m, bo W2 i tak wyklucza dwa okręty na tym samym doku jednocześnie.
+Pojedyncza kolejka i atomowy dual-grant eliminują zakleszczenie między dokiem
+a mechanikami. Szczegóły: `docs/opis_algorytmu.md` (algorytm) i
+`docs/opis_szczegolowy.md` (implementacja).
 
 ## Obrona projektu
 
