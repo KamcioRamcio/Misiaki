@@ -1,14 +1,14 @@
 #ifndef OKRETY_DOCK_H
 #define OKRETY_DOCK_H
 
-#include <stdbool.h>
-#include "types.h"
 #include "queue.h"
+#include "types.h"
+#include <stdbool.h>
 
-/* Deterministyczna reguła przydziału doku — czysta funkcja od (ts, pid).
+/* Deterministyczna reguła przydziału doku - czysta funkcja od (ts, pid).
  * Dock jest niezmienny przez cały czas życia żądania (przypisywany w chwili
  * tworzenia REQ). Każdy proces, który zna (ts, pid, K), oblicza ten sam dok. */
-int  dock_assign(int ts, int pid, int K);
+int dock_assign(int ts, int pid, int K);
 
 /* Warunek W2: żaden poprzednik my_req w Q nie ma tego samego doku.
  * (Jeśli poprzednik z tym samym dokiem istnieje, on i tak wejdzie i wyjdzie

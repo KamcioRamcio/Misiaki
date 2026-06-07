@@ -5,7 +5,7 @@ Niezmienniki:
   I1: w każdej chwili na każdym doku jest <= 1 okręt,
   I2: w każdej chwili suma m aktywnych okrętów <= M.
 
-Zdarzenia są sortowane po (lamport_ts, pid, kind) — RELEASE dla danego pid
+Zdarzenia są sortowane po (lamport_ts, pid, kind) - RELEASE dla danego pid
 przed ENTER innego pid przy równych timestampach (LEAVE pierwszy zwalnia
 zasób przed nową okupacją).
 
@@ -20,7 +20,7 @@ LEAVE = re.compile(r"\[(\d+)\] \[t(\d+)\] Zwalniam dok (\d+) i (\d+) mechaników
 
 def main(path: str, M: int) -> int:
     events: list[tuple[int, int, int, str, int, int]] = []
-    # (ts, kind_priority, pid, kind, dock, mech) — kind_priority: 0=LEAVE, 1=ENTER
+    # (ts, kind_priority, pid, kind, dock, mech) - kind_priority: 0=LEAVE, 1=ENTER
 
     with open(path) as fh:
         for line in fh:

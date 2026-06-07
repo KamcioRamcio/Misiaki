@@ -1,8 +1,8 @@
 #ifndef OKRETY_COMM_H
 #define OKRETY_COMM_H
 
-#include <stdbool.h>
 #include "types.h"
+#include <stdbool.h>
 
 /* Wysyła REQ(ts, pid, m, dock) do wszystkich procesów oprócz my_pid. */
 void comm_send_req_all(int ts, int my_pid, int m, int dock, int n_procs);
