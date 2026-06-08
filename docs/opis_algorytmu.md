@@ -1,4 +1,4 @@
-# Opis algorytmu — Okręty / Misie
+# Opis algorytmu - Okręty / Misie
 
 **Algorytm Lamport-Dual**
 N okrętów, K rozróżnialnych doków, M nierozróżnialnych mechaników.
@@ -21,7 +21,7 @@ L03. Okręt wysyła REQ(ts_i, i, m_i, d_i) do wszystkich pozostałych
      kolejki Q. Następnie przechodzi do stanu TRYING.
 
 L04. Każdy odbiorca REQ wstawia żądanie do swojej kopii Q
-     i natychmiast odsyła ACK — niezależnie od własnego stanu.
+     i natychmiast odsyła ACK - niezależnie od własnego stanu.
      Brak opóźniania ACK (algorytm Lamporta, nie Ricarta-Agrawali).
 
 L05. Każdy proces utrzymuje lokalną kopię kolejki Q posortowaną
@@ -44,7 +44,7 @@ L06. Okręt wchodzi do INSECTION gdy spełnione są jednocześnie:
 
 L07. Po zakończeniu naprawy okręt usuwa własne żądanie z Q i wysyła
      RELEASE(ts, i) do wszystkich. Jeden RELEASE zwalnia jednocześnie
-     dok i mechaniki — brak osobnych wiadomości per zasób.
+     dok i mechaniki - brak osobnych wiadomości per zasób.
 
 L08. Reguła d_i = ((ts_i + i) mod K) + 1 jest czystą funkcją
      (ts_i, i, K). Każdy proces znający treść REQ oblicza ten sam
@@ -74,7 +74,7 @@ L11. TRYING
 L12. INSECTION
      Okręt jest naprawiany w doku d_i, zajmuje m_i mechaników.
      Obydwa zasoby trzymane atomowo przez cały czas naprawy.
-     Nadal obsługuje wiadomości — w szczególności odpowiada ACK
+     Nadal obsługuje wiadomości - w szczególności odpowiada ACK
      na REQ, żeby nie blokować innych w stanie TRYING.
 ```
 
@@ -199,59 +199,21 @@ L25. Reakcje na wiadomości w stanie INSECTION:
 
 ---
 
-## POPRAWNOŚĆ (SKRÓT)
-
-```
-L26. Wzajemne wykluczanie na doku (I1): co najwyżej 1 okręt
-     na danym doku d jednocześnie w INSECTION.
-     Dowód: niech A i B w INSECTION z tym samym dokiem d,
-     (ts_A,A) < (ts_B,B). Z W1 dla B: last_seen_B[A] > ts_B > ts_A.
-     Kanały FIFO ⇒ REQ_A dotarło do B przed ACK(ts>ts_B).
-     Zatem REQ_A było w Q_B gdy B sprawdzało W2.
-     A jest poprzednikiem B z tym samym dokiem ⇒ W2 fałszywe.
-     Sprzeczność — B nie mogło wejść. ∎
-
-L27. Ograniczenie mechaników (I2): Σ m_k ≤ M dla aktywnych.
-     Z I1: na każdym doku ≤ 1 aktywny okręt. Per-dok max
-     w W3 = realnie zajęte mechaniki na tym doku (max jest
-     osiągany przez jedynego aktywnego). W3 gwarantuje
-     total ≤ M w chwili każdego wejścia. ∎
-
-L28. Brak zakleszczenia.
-     Żądanie o globalnie najniższym (ts, pid) ma pustą pred.
-     W3: m_i ≤ M (m_i ∈ [1,M]) — spełnione.
-     W2: brak poprzedników — spełnione.
-     W1 domknie się po odebraniu ACK od wszystkich (każdy
-     wysyła ACK natychmiast po REQ). Wchodzi, wysyła RELEASE,
-     odblokowuje kolejnych. Indukcja po (ts,pid). ∎
-
-L29. Brak głodzenia.
-     Zegar Lamporta rośnie monotonicznie ⇒ każde żądanie ma
-     skończoną liczbę poprzedników. Każdy poprzednik eventualnie
-     wchodzi do sekcji i wysyła RELEASE (z L28). Po usunięciu
-     wszystkich poprzedników z tym samym dokiem (W2) i zwolnieniu
-     wystarczającej liczby mechaników (W3) — żądanie wejdzie. ∎
-```
-
----
-
 ## ZŁOŻONOŚĆ
 
 ```
-L30. Złożoność czasowa: 3 rundy komunikacyjne.
+L26. Złożoność czasowa: 3 rundy komunikacyjne.
      REQ (runda 1) → ACK (runda 2) → RELEASE (runda 3).
      Zgodna ze złożonością klasycznego algorytmu Lamporta.
 
-L31. Złożoność komunikacyjna: 3·(N−1) wiadomości na jedno
+L27. Złożoność komunikacyjna: 3·(N−1) wiadomości na jedno
      wejście i wyjście z sekcji krytycznej.
      (N−1 REQ) + (N−1 ACK) + (N−1 RELEASE).
 
-L32. Warunki W2 i W3 są obliczeniami czysto lokalnymi na
+L28. Warunki W2 i W3 są obliczeniami czysto lokalnymi na
      lokalnej kopii kolejki Q. Nie wprowadzają żadnych nowych
      typów wiadomości ani dodatkowych rund komunikacyjnych.
      Kosztem jest obliczenie O(|Q|) per sprawdzenie warunków.
 ```
 
 ---
-
-*Koniec opisu algorytmu.*
